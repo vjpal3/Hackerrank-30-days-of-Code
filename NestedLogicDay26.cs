@@ -15,30 +15,38 @@ class Solution {
     static void Main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
 
-        string[] a_temp = Console.ReadLine().Split(' ');
-        int[] actual = Array.ConvertAll(a_temp, Int32.Parse);
+        string[] r_temp = Console.ReadLine().Split(' ');
+        int[] returned = Array.ConvertAll(r_temp, Int32.Parse);
+        int return_day = returned[0];
+        int return_month = returned[1];
+        int return_year = returned[2];
 
-        string[] e_temp = Console.ReadLine().Split(' ');
-        int[] expected = Array.ConvertAll(e_temp, Int32.Parse);
+        string[] d_temp = Console.ReadLine().Split(' ');
+        int[] due = Array.ConvertAll(d_temp, Int32.Parse);
+        int due_day =  due[0];
+        int due_month = due[1];
+        int due_year = due[2];
 
-        int year_diff = actual[2] - expected[2];
-        int month_diff = actual[1] - expected[1];
-        int day_diff = actual[0] - expected[0];
-
-        if(year_diff <= 0) {
-            if(month_diff <= 0) {
-                if(day_diff <= 0) {
-                    Console.WriteLine(0);
-                }
-                else {
-                    Console.WriteLine(15 * day_diff);
+        int fine = 0;
+        if (return_year == due_year)
+        {
+            if (return_month == due_month)
+            {
+                if (return_day > due_day)
+                {
+                    fine = 15 * (return_day - due_day);
                 }
             }
-            else {
-                Console.WriteLine(500 * month_diff);
+            else if (return_month > due_month)
+            {
+                fine = 500 * (return_month - due_month);
             }
         }
-        else 
-            Console.WriteLine(10000);       
+        else if (return_year > due_year)
+        {
+            fine = 10000;
+        }
+        Console.WriteLine(fine);
     }
 }
+
