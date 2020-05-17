@@ -73,6 +73,34 @@ public class Main {
     
   rows2.close();
 
+  // 12. Stream rows from CSV file, store fields in HashMap
+  Stream<String> rows3 = Files.lines(Paths.get("data.txt"));
+  Map<String, Integer> map = new HashMap<>();
+  map = rows3
+    .map(x -> x.split(","))
+    .filter(x -> x.length == 3)
+    .filter(x -> Integer.parseInt(x[1]) > 15)
+    .collect(Collectors.toMap(
+      x -> x[0],
+      x -> Integer.parseInt(x[1])
+    ));
+    
+  rows3.close();
 
+  for(String key : map.keySet()) {
+    System.out.println(key + " " + map.get(key));
+  }
+
+  // 13. Reduction - sum
+  double total = Stream.of(7.3, 1.5, 4.8)
+    .reduce(0.0, (Double a, Double b) -> a +b);
+
+  System.out.println("Total: " + total); // 13.600000000000001
+
+  // 14. Reduction - summary statistics
+  IntSummaryStatistics summary = IntStream.of(7,  2, 19, 88, 73, 4, 10)
+  .summaryStatistics();
+  System.out.println(summary); 
+  // IntSummaryStatistics{count=7, sum=203, min=2, average=29.000000, max=88}
   }
 }
